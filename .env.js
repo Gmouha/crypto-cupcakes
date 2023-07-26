@@ -1,0 +1,4 @@
+AUTH0_SECRET=your_secret_here
+AUTH0_AUDIENCE=http://localhost:3000
+AUTH0_CLIENT_ID=your_id_here
+AUTH0_BASE_URL=your_base_url_here

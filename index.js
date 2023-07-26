@@ -24,6 +24,7 @@ app.use(express.urlencoded({extended:true}));
 app.get('/cupcakes', async (req, res, next) => {
   try {
     const cupcakes = await Cupcake.findAll();
+    console.log(req.oidc.user); // Log user data to the console
     res.send(cupcakes);
   } catch (error) {
     console.error(error);
@@ -42,3 +43,18 @@ app.listen(PORT, () => {
   console.log(`Cupcakes are ready at http://localhost:${PORT}`);
 });
 
+const {
+  AUTH0_SECRET = 'a long, randomly-generated string stored in env', // generate one by using: `openssl rand -base64 32`
+  AUTH0_AUDIENCE = 'http://localhost:3000',
+  AUTH0_CLIENT_ID,
+  AUTH0_BASE_URL,
+} = process.env;
+
+const config = {
+  authRequired: true, // this is different from the documentation
+  auth0Logout: true,
+  secret: AUTH0_SECRET,
+  baseURL: AUTH0_AUDIENCE,
+  clientID: AUTH0_CLIENT_ID,
+  issuerBaseURL: AUTH0_BASE_URL,
+};
